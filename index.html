@@ -1,0 +1,27 @@
+<head></head>
+<body>
+<div id="mainDiv"></div>
+<script>
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'http://localhost:8000/links');
+	xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+	var mainDiv = document.getElementById('mainDiv');
+	document.querySelector('body').classList.add('loading');
+	xhr.onload = function(){
+		document.querySelector('body').classList.remove('loading');
+		var response = JSON.parse(this.responseText);
+		var aElement, script;
+		for(var i=0; i<10; i++){
+			aElement = document.createElement('a');
+			aElement.setAttribute('href', response[i]);
+			aElement.classList.add('embedly-card');
+			mainDiv.appendChild(aElement);
+		}
+		
+	}
+	xhr.send();
+
+</script>
+<script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+</body>
+<link rel="stylesheet" type="text/css" href="index.css">
